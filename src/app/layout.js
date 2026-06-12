@@ -10,10 +10,22 @@ const poppins = Poppins({
 
 import ClientLayoutWrapper from '../components/ClientLayoutWrapper';
 
-export const metadata = {
-  title: 'KHAN Builders and Developers',
-  description: 'Your Dream Home in Ambernath & Thane',
-};
+export async function generateMetadata() {
+  try {
+    const res = await fetch('http://localhost:5000/api/settings', { next: { revalidate: 10 } });
+    const settings = await res.json();
+    return {
+      title: settings.siteTitle || 'KHAN Builders and Developers',
+      description: settings.siteDescription || 'Your Dream Home in Ambernath & Thane',
+      keywords: settings.metaKeywords || 'real estate, homes, ambernath, thane, builders',
+    };
+  } catch {
+    return {
+      title: 'KHAN Builders and Developers',
+      description: 'Your Dream Home in Ambernath & Thane',
+    };
+  }
+}
 
 export default function RootLayout({ children }) {
   return (

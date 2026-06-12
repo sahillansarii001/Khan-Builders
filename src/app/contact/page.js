@@ -5,6 +5,7 @@ import { MapPin, Phone, Mail, Send, Clock, HelpCircle, ChevronDown, ChevronUp } 
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import { useSettings } from '../../context/SettingsContext';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ export default function ContactPage() {
   });
   const [loading, setLoading] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
-
+  const { settings } = useSettings();
   const [cms, setCms] = useState({
     contact: { 
       title: 'Get in Touch', 
@@ -106,37 +107,36 @@ export default function ContactPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {(cms.contact.phones || []).length > 0 && (
+            {settings?.phone && (
             <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-500 group">
               <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-gold group-hover:to-yellow-400 transition-colors duration-500 transform group-hover:-rotate-6">
                 <Phone size={36} className="text-gold group-hover:text-white transition-colors duration-500" />
               </div>
               <h3 className="text-2xl font-black text-navy mb-3 tracking-tight">Phone</h3>
-              {cms.contact.phones.map((p, i) => (
-                <p key={i} className="text-gray-600 text-lg font-medium">{p}</p>
-              ))}
+              <p className="text-gray-600 text-lg font-medium">{settings.phone}</p>
+              {settings.whatsappNumber && (
+                <p className="text-gray-600 text-lg font-medium mt-1">WA: {settings.whatsappNumber}</p>
+              )}
             </div>
             )}
             
-            {(cms.contact.emails || []).length > 0 && (
+            {settings?.email && (
             <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-500 group">
               <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-gold group-hover:to-yellow-400 transition-colors duration-500 transform group-hover:rotate-6">
                 <Mail size={36} className="text-gold group-hover:text-white transition-colors duration-500" />
               </div>
               <h3 className="text-2xl font-black text-navy mb-3 tracking-tight">Email</h3>
-              {cms.contact.emails.map((e, i) => (
-                <p key={i} className="text-gray-600 text-lg font-medium">{e}</p>
-              ))}
+              <p className="text-gray-600 text-lg font-medium">{settings.email}</p>
             </div>
             )}
 
-            {cms.contact.address && (
+            {settings?.address && (
             <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-500 group">
               <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-gold group-hover:to-yellow-400 transition-colors duration-500 transform group-hover:-rotate-6">
                 <MapPin size={36} className="text-gold group-hover:text-white transition-colors duration-500" />
               </div>
               <h3 className="text-2xl font-black text-navy mb-3 tracking-tight">Head Office</h3>
-              <p className="text-gray-600 text-lg font-medium leading-relaxed">{cms.contact.address}</p>
+              <p className="text-gray-600 text-lg font-medium leading-relaxed">{settings.address}</p>
             </div>
             )}
 
@@ -236,7 +236,7 @@ export default function ContactPage() {
         {/* Map */}
         <motion.div className="mt-32 rounded-[2.5rem] overflow-hidden shadow-2xl h-[600px] border-8 border-white bg-gray-100" {...fadeInUp}>
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120562.13887625126!2d73.0805566!3d19.2069818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be795856b3b2463%3A0xc66579c29ceb64dc!2sAmbernath%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+            src={settings?.googleMapsLink || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120562.13887625126!2d73.0805566!3d19.2069818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be795856b3b2463%3A0xc66579c29ceb64dc!2sAmbernath%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"} 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 

@@ -2,16 +2,18 @@
 
 import { MessageCircle } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useSettings } from '../context/SettingsContext';
 
 export default function WhatsAppButton() {
   const pathname = usePathname();
+  const { settings } = useSettings();
 
   // Hide on panel routes
   if (pathname.startsWith('/panel')) {
     return null;
   }
 
-  const phoneNumber = '910000000000'; // Replace with actual number
+  const phoneNumber = settings?.whatsappNumber?.replace(/\D/g, '') || '910000000000';
   const message = encodeURIComponent('Hello KHAN Builders, I am interested in a property.');
 
   return (
