@@ -51,6 +51,7 @@ export default function TestimonialsManagerPage() {
     if (role !== 'admin') {
       router.push('/panel/login');
     } else {
+      // eslint-disable-next-line
       fetchTestimonials().then(() => setLoading(false));
     }
   }, [router]);

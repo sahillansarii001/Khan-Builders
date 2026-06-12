@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { MapPin, Phone, Mail, Globe, MessageSquare, Briefcase, Play, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { MapPin, Phone, Mail, Globe, MessageSquare, Briefcase, Play } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 
 export default function Footer() {
@@ -53,22 +53,22 @@ export default function Footer() {
             <div className="flex space-x-4">
               {settings?.facebookLink && (
                 <a href={settings.facebookLink} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold hover:text-navy hover:scale-110 hover:shadow-lg hover:shadow-gold/20 transition-all duration-300">
-                  <Facebook size={20} />
+                  <Globe size={20} />
                 </a>
               )}
               {settings?.instagramLink && (
                 <a href={settings.instagramLink} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold hover:text-navy hover:scale-110 hover:shadow-lg hover:shadow-gold/20 transition-all duration-300">
-                  <Instagram size={20} />
+                  <MessageSquare size={20} />
                 </a>
               )}
               {settings?.twitterLink && (
                 <a href={settings.twitterLink} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold hover:text-navy hover:scale-110 hover:shadow-lg hover:shadow-gold/20 transition-all duration-300">
-                  <Twitter size={20} />
+                  <Briefcase size={20} />
                 </a>
               )}
               {settings?.youtubeLink && (
                 <a href={settings.youtubeLink} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold hover:text-navy hover:scale-110 hover:shadow-lg hover:shadow-gold/20 transition-all duration-300">
-                  <Youtube size={20} />
+                  <Play size={20} />
                 </a>
               )}
             </div>

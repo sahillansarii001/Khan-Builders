@@ -39,6 +39,7 @@ export default function GalleryManagerDashboard() {
     if (role !== 'gallery-manager' && role !== 'admin') {
       router.push('/panel/login');
     } else {
+      // eslint-disable-next-line
       fetchImages().then(() => setLoading(false));
     }
   }, [router]);

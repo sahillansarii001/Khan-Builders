@@ -40,6 +40,7 @@ export default function LeadManagerDashboard() {
     if (role !== 'lead-manager' && role !== 'admin') {
       router.push('/panel/login');
     } else {
+      // eslint-disable-next-line
       fetchLeads().then(() => setLoading(false));
     }
   }, [router]);

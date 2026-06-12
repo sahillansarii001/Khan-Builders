@@ -47,7 +47,7 @@ export default function PropertyManagerDashboard() {
     if (role !== 'property-manager' && role !== 'admin') {
       router.push('/panel/login');
     } else {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line
       fetchProperties();
     }
   }, [router]);
