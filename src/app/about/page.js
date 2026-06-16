@@ -44,7 +44,7 @@ export default function AboutPage() {
 
   useEffect(() => {
     const fetchCms = () => {
-      axios.get('http://localhost:5000/api/cms')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cms`)
         .then(res => {
           if (res.data?.about) setCms(res.data.about);
         })

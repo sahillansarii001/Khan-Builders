@@ -39,7 +39,7 @@ export default function CMSDashboard() {
 
   async function fetchCmsData() {
     try {
-      const res = await axios.get('http://localhost:5000/api/cms');
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cms`);
       if (res.data) {
         setCmsData(res.data);
         const d = res.data;
@@ -86,7 +86,7 @@ export default function CMSDashboard() {
     const timer = setTimeout(() => {
       const token = localStorage.getItem('token');
       if (token && cmsData && Object.keys(cmsData.home).length > 0) {
-        axios.put('http://localhost:5000/api/cms', cmsData, {
+        axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/cms`, cmsData, {
           headers: { Authorization: `Bearer ${token}` }
         }).catch(err => console.error('Auto-save error:', err));
       }
@@ -101,7 +101,7 @@ export default function CMSDashboard() {
     setIsSaving(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.put('http://localhost:5000/api/cms', cmsData, {
+      await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/cms`, cmsData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('CMS content updated successfully!');

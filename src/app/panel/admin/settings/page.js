@@ -6,7 +6,7 @@ import { Settings, Save, Globe, Share2, Search, Link2 } from 'lucide-react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
-const API = 'http://localhost:5000/api/settings';
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/settings`;
 
 export default function AdminSettings() {
   const router = useRouter();

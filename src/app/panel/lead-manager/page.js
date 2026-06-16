@@ -6,7 +6,7 @@ import { LogOut, Download, Phone, Mail, Calendar, CheckSquare, Trash2, MessageSq
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
-const API = 'http://localhost:5000/api/leads';
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/leads`;
 
 const COLUMNS = ['New', 'Contacted', 'Negotiation', 'Closed'];
 
@@ -89,7 +89,7 @@ export default function LeadManagerDashboard() {
   };
 
   const exportCSV = () => {
-    window.open('http://localhost:5000/api/leads/export/csv', '_blank');
+    window.open(`${process.env.NEXT_PUBLIC_API_URL}/api/leads/export/csv`, '_blank');
   };
 
   const formatDate = (dateStr) => {

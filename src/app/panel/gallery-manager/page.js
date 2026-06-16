@@ -7,7 +7,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
-const API = 'http://localhost:5000/api/gallery';
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/gallery`;
 const CATEGORIES = ['Exteriors', 'Interiors', 'Amenities', 'Ongoing Projects'];
 
 const EMPTY_FORM = { imageUrl: '', projectName: '', category: 'Exteriors', featured: false };
@@ -60,10 +60,10 @@ export default function GalleryManagerDashboard() {
         for (let i = 0; i < selectedFiles.length; i++) {
           const uploadData = new FormData();
           uploadData.append('images', selectedFiles[i]);
-          const uploadRes = await axios.post('http://localhost:5000/api/upload', uploadData, {
+          const uploadRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/upload`, uploadData, {
             headers: { 'Content-Type': 'multipart/form-data' }
           });
-          const imageUrl = `http://localhost:5000${uploadRes.data.images[0]}`;
+          const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}${uploadRes.data.images[0]}`;
           await axios.post(API, { imageUrl, projectName: form.projectName, category: form.category, featured: form.featured });
         }
         toast.success(`${selectedFiles.length} image(s) uploaded!`);

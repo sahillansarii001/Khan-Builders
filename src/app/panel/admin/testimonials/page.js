@@ -6,7 +6,7 @@ import { Star, Plus, X, Trash2, CheckCircle, XCircle, Edit, Quote, User } from '
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
-const API = 'http://localhost:5000/api/testimonials';
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/testimonials`;
 
 function StarRating({ value, onChange }) {
   return (
