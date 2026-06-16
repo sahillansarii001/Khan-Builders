@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           
           <div className="mb-8 md:mb-0">
-            <Link href="/" className="text-3xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200 mb-6 inline-block">
+            <Link href="/" className="text-3xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-gold to-yellow-200 mb-6 inline-block">
               KHAN <span className="text-white text-xl font-light tracking-widest ml-1">BUILDERS</span>
             </Link>
             <p className="text-sm mt-4 text-gray-400 leading-relaxed font-light">
