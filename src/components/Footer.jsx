@@ -76,7 +76,18 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500 flex flex-col md:flex-row justify-between items-center">
-          <p>{settings?.footerText || `© ${new Date().getFullYear()} KHAN Builders and Developers. All rights reserved.`}</p>
+          <p>
+            Made by{' '}
+            <a 
+              href="https://ahmed.nexcoreinstitute.org/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-gold transition-colors font-medium"
+            >
+              Ahmed khan
+            </a>{' '}
+            All rights reserved.
+          </p>
           <p className="mt-2 md:mt-0">
             <Link href="/panel/login" className="hover:text-gold transition-colors">Employee Login</Link>
           </p>
