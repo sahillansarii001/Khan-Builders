@@ -12,7 +12,7 @@ import ClientLayoutWrapper from '../components/ClientLayoutWrapper';
 
 export async function generateMetadata() {
   try {
-    const res = await fetch('http://localhost:5000/api/settings', { next: { revalidate: 10 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings`, { next: { revalidate: 10 } });
     const settings = await res.json();
     return {
       title: settings.siteTitle || 'KHAN Builders and Developers',

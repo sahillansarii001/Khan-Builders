@@ -32,7 +32,7 @@ export default function PropertyManagerDashboard() {
 
   const fetchProperties = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/properties', { withCredentials: true });
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/properties`, { withCredentials: true });
       setProperties(res.data);
       setLoading(false);
     } catch (err) {
@@ -57,7 +57,7 @@ export default function PropertyManagerDashboard() {
   const confirmDelete = async () => {
     if (!deleteConfirmId) return;
     try {
-      await axios.delete(`http://localhost:5000/api/properties/${deleteConfirmId}`, { withCredentials: true });
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/properties/${deleteConfirmId}`, { withCredentials: true });
       fetchProperties();
       setDeleteConfirmId(null);
       toast.success('Property deleted');
@@ -114,11 +114,11 @@ export default function PropertyManagerDashboard() {
         uploadData.append('images', selectedFiles[i]);
       }
       try {
-        const uploadRes = await axios.post('http://localhost:5000/api/upload', uploadData, {
+        const uploadRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/upload`, uploadData, {
           headers: { 'Content-Type': 'multipart/form-data' },
           withCredentials: true
         });
-        uploadedImageUrls = uploadRes.data.images.map(url => `http://localhost:5000${url}`);
+        uploadedImageUrls = uploadRes.data.images.map(url => `${process.env.NEXT_PUBLIC_API_URL}${url}`);
       } catch (err) {
         toast.error('Failed to upload images');
         return;
@@ -134,10 +134,10 @@ export default function PropertyManagerDashboard() {
     
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/properties/${editingId}`, payload, { withCredentials: true });
+        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/properties/${editingId}`, payload, { withCredentials: true });
         toast.success('Property updated');
       } else {
-        await axios.post('http://localhost:5000/api/properties', payload, { withCredentials: true });
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/properties`, payload, { withCredentials: true });
         toast.success('Property added');
       }
       setShowModal(false);

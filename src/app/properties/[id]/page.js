@@ -42,7 +42,7 @@ export default function PropertyDetailPage() {
 
   useEffect(() => {
     if (!id) return;
-    axios.get(`http://localhost:5000/api/properties/${id}`)
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/properties/${id}`)
       .then(res => { setProperty(res.data); setLoading(false); })
       .catch(() => { toast.error('Property not found'); setLoading(false); });
   }, [id]);
@@ -51,7 +51,7 @@ export default function PropertyDetailPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await axios.post('http://localhost:5000/api/leads', {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/leads`, {
         ...form,
         interest: property.type === 'sale' ? 'Buy' : 'Rent',
         message: form.message || `Interested in: ${property.title}`,

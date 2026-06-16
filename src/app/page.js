@@ -59,7 +59,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchCms = () => {
-      axios.get('http://localhost:5000/api/cms')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cms`)
         .then(res => {
           if (res.data?.home) setCms(res.data.home);
         })
@@ -67,7 +67,7 @@ export default function HomePage() {
     };
 
     const fetchTestimonials = () => {
-      axios.get('http://localhost:5000/api/testimonials')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/testimonials`)
         .then(res => setTestimonials(res.data))
         .catch(err => console.error('Error fetching testimonials', err));
     };

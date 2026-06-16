@@ -37,7 +37,7 @@ export default function ContactPage() {
 
   useEffect(() => {
     const fetchCms = () => {
-      axios.get('http://localhost:5000/api/cms')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cms`)
         .then(res => {
           if (res.data) {
             setCms(prev => ({
@@ -57,7 +57,7 @@ export default function ContactPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/leads', formData);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/leads`, formData);
       toast.success('Inquiry submitted successfully! We will contact you soon.');
       setFormData({ name: '', phone: '', email: '', interest: 'Buy', message: '' });
     } catch (error) {

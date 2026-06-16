@@ -21,12 +21,12 @@ export default function GalleryPage() {
 
   useEffect(() => {
     const fetchCms = () => {
-      axios.get('http://localhost:5000/api/cms')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cms`)
         .then(res => { if (res.data?.gallery) setCms(res.data.gallery); })
         .catch(err => console.error('Error fetching CMS data', err));
     };
     const fetchGallery = () => {
-      axios.get('http://localhost:5000/api/gallery')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/gallery`)
         .then(res => setImages(res.data))
         .catch(err => console.error('Error fetching gallery', err));
     };
