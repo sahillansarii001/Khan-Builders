@@ -14,7 +14,7 @@ export const SettingsProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchSettings = () => {
-      axios.get('http://localhost:5000/api/settings')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/settings`)
         .then(res => {
           if (res.data) setSettings(res.data);
           setLoading(false);

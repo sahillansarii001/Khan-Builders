@@ -21,7 +21,7 @@ export default function PropertiesPage() {
 
   useEffect(() => {
     const fetchCms = () => {
-      axios.get('http://localhost:5000/api/cms')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cms`)
         .then(res => {
           if (res.data) {
             setCms(prev => ({
@@ -34,7 +34,7 @@ export default function PropertiesPage() {
     };
     
     const fetchProperties = () => {
-      axios.get('http://localhost:5000/api/properties')
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/properties`)
         .then(res => setProperties(res.data))
         .catch(err => console.error('Error fetching properties', err));
     };
