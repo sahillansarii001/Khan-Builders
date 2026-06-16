@@ -16,18 +16,31 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // Simulate API call for now since backend is separate
-      // const res = await axios.post('/api/auth/login', { email, password });
-      
-      // Temporary hardcoded logic for demonstration
       let role = '';
-      if (email.includes('admin')) role = 'admin';
-      else if (email.includes('property')) role = 'property-manager';
-      else if (email.includes('lead')) role = 'lead-manager';
-      else if (email.includes('gallery')) role = 'gallery-manager';
-      else throw new Error('Invalid credentials');
+      if (
+        email === process.env.NEXT_PUBLIC_ADMIN_EMAIL &&
+        password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD
+      ) {
+        role = 'admin';
+      } else if (
+        email === process.env.NEXT_PUBLIC_PROPERTY_EMAIL &&
+        password === process.env.NEXT_PUBLIC_PROPERTY_PASSWORD
+      ) {
+        role = 'property-manager';
+      } else if (
+        email === process.env.NEXT_PUBLIC_LEAD_EMAIL &&
+        password === process.env.NEXT_PUBLIC_LEAD_PASSWORD
+      ) {
+        role = 'lead-manager';
+      } else if (
+        email === process.env.NEXT_PUBLIC_GALLERY_EMAIL &&
+        password === process.env.NEXT_PUBLIC_GALLERY_PASSWORD
+      ) {
+        role = 'gallery-manager';
+      } else {
+        throw new Error('Invalid credentials');
+      }
 
-      // Set cookie/local storage in real app
       localStorage.setItem('userRole', role);
 
       toast.success('Logged in successfully!');
@@ -93,15 +106,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-500">
-          <p>Test Accounts (Password: anything):</p>
-          <ul className="mt-2 space-y-1">
-            <li>admin@test.com</li>
-            <li>property@test.com</li>
-            <li>lead@test.com</li>
-            <li>gallery@test.com</li>
-          </ul>
-        </div>
+
       </div>
     </div>
   );
