@@ -39,10 +39,10 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div className="mb-4 md:mb-0">
-            <h1 className="text-3xl font-bold text-navy">Admin <span className="text-gold">Dashboard</span></h1>
-            <p className="text-gray-500 mt-1">System Overview & Management</p>
+        <div className="mb-6 md:mb-8 bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-navy">Admin <span className="text-gold">Dashboard</span></h1>
+            <p className="text-gray-500 text-sm md:text-base mt-1">System Overview & Management</p>
           </div>
         </div>
 
@@ -55,13 +55,13 @@ export default function AdminDashboard() {
                 { title: 'Gallery Photos', count: '85', icon: Images, color: 'text-purple-600', bg: 'bg-purple-100' },
                 { title: 'Testimonials', count: '32', icon: MessageSquare, color: 'text-orange-600', bg: 'bg-orange-100' }
               ].map((stat, i) => (
-                <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center hover:shadow-md transition-shadow">
-                  <div className={`w-14 h-14 ${stat.bg} rounded-xl flex items-center justify-center mr-5`}>
-                    <stat.icon className={stat.color} size={26} />
+                <div key={i} className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center hover:shadow-md transition-shadow">
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 ${stat.bg} rounded-xl flex items-center justify-center mr-4 sm:mr-5 shrink-0`}>
+                    <stat.icon className={stat.color} size={24} />
                   </div>
                   <div>
-                    <p className="text-gray-500 text-sm font-bold uppercase tracking-wider">{stat.title}</p>
-                    <h3 className="text-3xl font-black text-navy">{stat.count}</h3>
+                    <p className="text-gray-500 text-xs sm:text-sm font-bold uppercase tracking-wider">{stat.title}</p>
+                    <h3 className="text-2xl sm:text-3xl font-black text-navy">{stat.count}</h3>
                   </div>
                 </div>
               ))}
@@ -86,17 +86,17 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Chart */}
               <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-navy flex items-center">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4 sm:gap-0">
+                  <h2 className="text-lg sm:text-xl font-bold text-navy flex items-center">
                     <TrendingUp className="mr-2 text-gold" size={24} /> Performance Analytics
                   </h2>
-                  <select className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm outline-none text-gray-600 bg-gray-50">
+                  <select className="border border-gray-200 rounded-lg px-3 py-2 sm:py-1.5 text-sm outline-none text-gray-600 bg-gray-50 w-full sm:w-auto">
                     <option>Last 7 Months</option>
                     <option>This Year</option>
                   </select>
                 </div>
-                <div className="h-72 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="w-full overflow-hidden">
+                  <ResponsiveContainer width="100%" aspect={2.5}>
                     <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                       <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9ca3af'}} dy={10} />
@@ -142,11 +142,11 @@ export default function AdminDashboard() {
 
             {/* User Management */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-navy flex items-center">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4 sm:gap-0">
+                <h2 className="text-lg sm:text-xl font-bold text-navy flex items-center">
                   <Users className="mr-2 text-gold" size={24} /> User Management
                 </h2>
-                <button className="bg-navy text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-navy/90 transition-colors">
+                <button className="bg-navy text-white px-4 py-2 sm:py-2 rounded-lg font-bold text-sm hover:bg-navy/90 transition-colors w-full sm:w-auto">
                   + Add User
                 </button>
               </div>
