@@ -98,7 +98,7 @@ export default function HomePage() {
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 drop-shadow-2xl leading-tight tracking-tight max-w-4xl mx-auto">
             {cms.heroTitle.split(' ').slice(0, -2).join(' ')}{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200 whitespace-nowrap">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-gold to-yellow-200 whitespace-nowrap">
               {cms.heroTitle.split(' ').slice(-2).join(' ')}
             </span>
           </h1>
@@ -188,7 +188,7 @@ export default function HomePage() {
               { icon: 'PhoneCall', title: '24/7 Support', desc: 'Dedicated customer service guiding you through every step of your home buying journey.' }
             ]).map((feature, i) => (
               <motion.div key={i} variants={fadeInUp} className="bg-white/60 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.1)] transition-all duration-500 border border-white hover:-translate-y-2 group">
-                <div className="w-16 h-16 bg-navy/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-gold group-hover:to-yellow-400 transition-all duration-500 transform group-hover:-rotate-6 group-hover:scale-110">
+                <div className="w-16 h-16 bg-navy/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-linear-to-br group-hover:from-gold group-hover:to-yellow-400 transition-all duration-500 transform group-hover:-rotate-6 group-hover:scale-110">
                   <IconComponent name={feature.icon} size={32} className="text-navy group-hover:text-white transition-colors duration-500" />
                 </div>
                 <h3 className="text-2xl font-bold text-navy mb-3">{feature.title}</h3>
@@ -223,7 +223,7 @@ export default function HomePage() {
                 { icon: 'ShieldCheck', text: '24/7 CCTV Security' }
               ]).map((item, i) => (
                 <div key={i} className="flex items-center space-x-4 group p-3 hover:bg-gold/5 rounded-2xl transition-colors cursor-default">
-                  <div className="w-14 h-14 rounded-full bg-gold/10 group-hover:bg-gold flex items-center justify-center flex-shrink-0 transition-colors duration-300 shadow-sm group-hover:shadow-lg">
+                  <div className="w-14 h-14 rounded-full bg-gold/10 group-hover:bg-gold flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm group-hover:shadow-lg">
                     <IconComponent name={item.icon} className="text-gold group-hover:text-white transition-colors duration-300" size={26} />
                   </div>
                   <span className="font-bold text-navy text-lg group-hover:text-gold transition-colors">{item.text}</span>
@@ -261,7 +261,7 @@ export default function HomePage() {
       <section className="py-24 bg-navy text-white px-4 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <motion.div className="text-center mb-20" {...fadeInUp}>
-            <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">Clients Say</span></h2>
+            <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">What Our <span className="text-transparent bg-clip-text bg-linear-to-r from-gold to-yellow-200">Clients Say</span></h2>
             <p className="text-gray-300 max-w-2xl mx-auto text-xl font-light">Don&apos;t just take our word for it. Hear from the families who have found their perfect home with us.</p>
           </motion.div>
 
@@ -283,7 +283,7 @@ export default function HomePage() {
                   {test.photo ? (
                     <img src={test.photo} alt={test.customerName} className="w-14 h-14 rounded-full object-cover mr-4 border-2 border-gold/30" onError={e => { e.target.style.display='none'; }} />
                   ) : (
-                    <div className="w-14 h-14 bg-gradient-to-br from-gold to-yellow-400 text-navy rounded-full flex items-center justify-center font-black text-2xl mr-4 shadow-lg shadow-gold/20">
+                    <div className="w-14 h-14 bg-linear-to-br from-gold to-yellow-400 text-navy rounded-full flex items-center justify-center font-black text-2xl mr-4 shadow-lg shadow-gold/20">
                       {test.customerName?.charAt(0).toUpperCase()}
                     </div>
                   )}
