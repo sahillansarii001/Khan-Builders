@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Lock, User as UserIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,37 +17,15 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      let role = '';
-      if (
-        email === process.env.NEXT_PUBLIC_ADMIN_EMAIL &&
-        password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD
-      ) {
-        role = 'admin';
-      } else if (
-        email === process.env.NEXT_PUBLIC_PROPERTY_EMAIL &&
-        password === process.env.NEXT_PUBLIC_PROPERTY_PASSWORD
-      ) {
-        role = 'property-manager';
-      } else if (
-        email === process.env.NEXT_PUBLIC_LEAD_EMAIL &&
-        password === process.env.NEXT_PUBLIC_LEAD_PASSWORD
-      ) {
-        role = 'lead-manager';
-      } else if (
-        email === process.env.NEXT_PUBLIC_GALLERY_EMAIL &&
-        password === process.env.NEXT_PUBLIC_GALLERY_PASSWORD
-      ) {
-        role = 'gallery-manager';
-      } else {
-        throw new Error('Invalid credentials');
-      }
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, { email, password });
+      const role = res.data.role;
 
       localStorage.setItem('userRole', role);
 
       toast.success('Logged in successfully!');
       
       // Redirect based on role
-      router.push(`/panel/${role}`);
+      router.push(role === 'admin' ? '/panel/admin' : `/panel/${role}`);
       
     } catch (error) {
       toast.error('Invalid email or password');

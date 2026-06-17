@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Home, Users, Images, MessageSquare, LogOut, LayoutDashboard, Settings, FileText } from 'lucide-react';
+import { Home, Users, Images, MessageSquare, LogOut, LayoutDashboard, Settings, FileText, X } from 'lucide-react';
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, setIsOpen }) {
   const router = useRouter();
   const pathname = usePathname();
   const [role, setRole] = useState('');
@@ -36,16 +36,34 @@ export default function Sidebar() {
   const allowedLinks = navLinks.filter(link => link.roles.includes(role));
 
   return (
-    <div className="w-64 bg-navy min-h-screen text-white flex flex-col fixed left-0 top-0 bottom-0 z-50">
-      <div className="p-6 border-b border-white/10">
-        <Link href="/" className="flex items-center text-2xl font-black tracking-tighter">
-          <span className="text-gold">KHAN</span>
-          <span className="text-white ml-1 font-light tracking-widest text-sm mt-1">BUILDERS</span>
-        </Link>
-        <p className="text-xs text-gray-400 mt-2 uppercase tracking-widest font-bold bg-white/5 inline-block px-2 py-1 rounded">
-          {role ? role.replace('-', ' ') : 'Loading...'}
-        </p>
-      </div>
+    <>
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm transition-opacity"
+          onClick={() => setIsOpen && setIsOpen(false)}
+        />
+      )}
+      
+      <div className={`w-64 bg-navy min-h-screen text-white flex flex-col fixed left-0 top-0 bottom-0 z-50 transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+        <div className="p-6 border-b border-white/10 flex justify-between items-start">
+          <div>
+            <Link href="/" className="flex items-center text-2xl font-black tracking-tighter">
+              <span className="text-gold">KHAN</span>
+              <span className="text-white ml-1 font-light tracking-widest text-sm mt-1">BUILDERS</span>
+            </Link>
+            <p className="text-xs text-gray-400 mt-2 uppercase tracking-widest font-bold bg-white/5 inline-block px-2 py-1 rounded">
+              {role ? role.replace('-', ' ') : 'Loading...'}
+            </p>
+          </div>
+          
+          <button 
+            className="md:hidden text-gray-400 hover:text-white p-1 bg-white/5 rounded-lg"
+            onClick={() => setIsOpen && setIsOpen(false)}
+          >
+            <X size={20} />
+          </button>
+        </div>
 
       <div className="flex-1 overflow-y-auto py-6">
         <nav className="px-4 flex flex-col space-y-1">
@@ -59,6 +77,7 @@ export default function Sidebar() {
               <Link
                 key={link.name}
                 href={link.path}
+                onClick={() => setIsOpen && setIsOpen(false)}
                 className={`flex items-center rounded-xl transition-all ${marginTop} ${
                   isSub ? 'py-2 pl-12 pr-4 text-sm' : 'py-3 px-4'
                 } ${
@@ -85,5 +104,6 @@ export default function Sidebar() {
         </button>
       </div>
     </div>
+    </>
   );
 }
