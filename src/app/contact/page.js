@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { MapPin, Phone, Mail, Send, Clock, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, Clock, HelpCircle, ChevronDown, ChevronUp, MessageSquare } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { useSettings } from '../../context/SettingsContext';
 
@@ -79,124 +79,157 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-20 overflow-hidden">
+    <div className="bg-[#f8fafc] min-h-screen pb-24 overflow-hidden relative">
+      {/* Decorative background blurs */}
+      <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-[10%] right-[-5%] w-[600px] h-[600px] bg-gold/10 rounded-full blur-[120px] pointer-events-none"></div>
+
       {/* Hero */}
-      {(cms.contact.title || cms.contact.subtitle) && (
-      <section className="bg-navy py-32 px-4 text-center relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/10 rounded-full blur-3xl -z-0 translate-x-1/2 -translate-y-1/2"></div>
-        <motion.div className="relative z-10" {...fadeInUp}>
+      <section className="bg-navy pt-32 pb-48 px-4 text-center relative overflow-hidden">
+        {/* Subtle grid pattern overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gold/15 rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/4"></div>
+        
+        <motion.div className="relative z-10 max-w-4xl mx-auto" {...fadeInUp}>
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 text-gold border border-gold/20 text-sm font-bold tracking-widest uppercase mb-6 shadow-[0_0_30px_rgba(201,168,76,0.2)]">
+            <MessageSquare size={16} /> Get In Touch
+          </span>
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
-            {cms.contact.title.split(' ').map((word, i, arr) => 
-              i >= arr.length - 1 
-                ? <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">{word}</span>
-                : <span key={i}>{word} </span>
-            )}
+            {cms.contact.title}
           </h1>
-          <div className="w-32 h-1.5 bg-gradient-to-r from-gold to-yellow-400 mx-auto mb-8 rounded-full shadow-lg shadow-gold/20"></div>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">{cms.contact.subtitle}</p>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
+            {cms.contact.subtitle}
+          </p>
         </motion.div>
       </section>
-      )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Contact Info */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-20">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-10">
+          
+          {/* Contact Info Sidebar */}
           <motion.div 
-            className="lg:col-span-1 space-y-8"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            className="xl:col-span-4 space-y-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {settings?.phone && (
-            <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-500 group">
-              <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-gold group-hover:to-yellow-400 transition-colors duration-500 transform group-hover:-rotate-6">
-                <Phone size={36} className="text-gold group-hover:text-white transition-colors duration-500" />
+              <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white flex items-start gap-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                <div className="w-16 h-16 shrink-0 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:bg-gold transition-colors duration-300">
+                  <Phone size={28} className="text-navy group-hover:text-white transition-colors duration-300" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-navy mb-1 tracking-tight">Call Us</h3>
+                  <p className="text-gray-600 font-medium">{settings.phone}</p>
+                  {settings.whatsappNumber && (
+                    <p className="text-gray-500 text-sm mt-1">WA: {settings.whatsappNumber}</p>
+                  )}
+                </div>
               </div>
-              <h3 className="text-2xl font-black text-navy mb-3 tracking-tight">Phone</h3>
-              <p className="text-gray-600 text-lg font-medium">{settings.phone}</p>
-              {settings.whatsappNumber && (
-                <p className="text-gray-600 text-lg font-medium mt-1">WA: {settings.whatsappNumber}</p>
-              )}
-            </div>
             )}
             
             {settings?.email && (
-            <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-500 group">
-              <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-gold group-hover:to-yellow-400 transition-colors duration-500 transform group-hover:rotate-6">
-                <Mail size={36} className="text-gold group-hover:text-white transition-colors duration-500" />
+              <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white flex items-start gap-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                <div className="w-16 h-16 shrink-0 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:bg-gold transition-colors duration-300">
+                  <Mail size={28} className="text-navy group-hover:text-white transition-colors duration-300" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-navy mb-1 tracking-tight">Email Us</h3>
+                  <p className="text-gray-600 font-medium">{settings.email}</p>
+                </div>
               </div>
-              <h3 className="text-2xl font-black text-navy mb-3 tracking-tight">Email</h3>
-              <p className="text-gray-600 text-lg font-medium">{settings.email}</p>
-            </div>
             )}
 
             {settings?.address && (
-            <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-500 group">
-              <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-gold group-hover:to-yellow-400 transition-colors duration-500 transform group-hover:-rotate-6">
-                <MapPin size={36} className="text-gold group-hover:text-white transition-colors duration-500" />
+              <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white flex items-start gap-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                <div className="w-16 h-16 shrink-0 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:bg-gold transition-colors duration-300">
+                  <MapPin size={28} className="text-navy group-hover:text-white transition-colors duration-300" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-navy mb-1 tracking-tight">Visit Office</h3>
+                  <p className="text-gray-600 font-medium leading-relaxed">{settings.address}</p>
+                </div>
               </div>
-              <h3 className="text-2xl font-black text-navy mb-3 tracking-tight">Head Office</h3>
-              <p className="text-gray-600 text-lg font-medium leading-relaxed">{settings.address}</p>
-            </div>
             )}
 
-            <div className="bg-navy p-10 rounded-3xl shadow-[0_20px_50px_rgb(0,0,0,0.2)] flex flex-col items-center text-center relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full blur-2xl -z-0 translate-x-1/2 -translate-y-1/2"></div>
-              <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mb-6 text-white backdrop-blur-sm relative z-10">
-                <Clock size={36} />
+            <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white flex items-start gap-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+              <div className="w-16 h-16 shrink-0 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:bg-gold transition-colors duration-300">
+                <Clock size={28} className="text-navy group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="text-2xl font-black text-white mb-3 tracking-tight relative z-10">Office Hours</h3>
-              <p className="text-gray-300 text-lg relative z-10">Monday - Saturday</p>
-              <p className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200 font-bold text-2xl my-2 relative z-10">{cms.contact.officeHours}</p>
-              <p className="text-gray-400 text-sm mt-2 font-medium tracking-wide relative z-10">Sunday: By Appointment</p>
+              <div>
+                <h3 className="text-xl font-bold text-navy mb-1 tracking-tight">Business Hours</h3>
+                <p className="text-gray-600 text-sm mb-1">Monday - Saturday</p>
+                <p className="text-navy font-bold text-lg">{cms.contact.officeHours}</p>
+                <p className="text-gray-500 text-xs mt-2 uppercase tracking-wider font-semibold">Sunday: Appointment Only</p>
+              </div>
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* Contact Form */}
           <motion.div 
-            className="lg:col-span-2 bg-white p-8 md:p-14 rounded-[2.5rem] shadow-[0_20px_50px_rgb(0,0,0,0.05)] border border-gray-100 relative overflow-hidden"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            className="xl:col-span-8 bg-white/90 backdrop-blur-2xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgb(0,0,0,0.04)] border border-white relative overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gray-50 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
-            <h2 className="text-4xl font-black text-navy mb-3 tracking-tight">Send an Inquiry</h2>
-            <p className="text-gray-500 text-lg mb-10 font-light">Fill out the form below and our sales representative will call you back within 24 hours.</p>
+            {/* Form decorative element */}
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-gold/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <h2 className="text-3xl md:text-4xl font-black text-navy mb-2 tracking-tight">Send a Message</h2>
+            <p className="text-gray-500 mb-8 font-medium">Fill out the form below and our real estate experts will get back to you.</p>
+            
+            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Full Name *</label>
-                  <input required type="text" name="name" value={formData.name} onChange={handleChange} className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" placeholder="John Doe" />
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy ml-1">Full Name</label>
+                  <input required type="text" name="name" value={formData.name} onChange={handleChange} 
+                    className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-gold/10 focus:border-gold outline-none transition-all duration-300 font-medium placeholder-gray-400" 
+                    placeholder="Enter your name" />
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number *</label>
-                  <input required type="tel" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" placeholder="+91 98765 43210" />
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy ml-1">Phone Number</label>
+                  <input required type="tel" name="phone" value={formData.phone} onChange={handleChange} 
+                    className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-gold/10 focus:border-gold outline-none transition-all duration-300 font-medium placeholder-gray-400" 
+                    placeholder="Enter your phone number" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-                  <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" placeholder="john@example.com" />
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy ml-1">Email Address</label>
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} 
+                    className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-gold/10 focus:border-gold outline-none transition-all duration-300 font-medium placeholder-gray-400" 
+                    placeholder="Enter your email" />
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">I am interested in *</label>
-                  <select name="interest" value={formData.interest} onChange={handleChange} className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all appearance-none cursor-pointer">
-                    <option value="Buy">Buying a Property</option>
-                    <option value="Rent">Renting a Property</option>
-                    <option value="General">General Inquiry</option>
-                  </select>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy ml-1">Interested In</label>
+                  <div className="relative">
+                    <select name="interest" value={formData.interest} onChange={handleChange} 
+                      className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-gold/10 focus:border-gold outline-none transition-all duration-300 font-medium appearance-none cursor-pointer">
+                      <option value="Buy">Buying a Property</option>
+                      <option value="Rent">Renting a Property</option>
+                      <option value="General">General Inquiry</option>
+                    </select>
+                    <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Your Message</label>
-                <textarea name="message" value={formData.message} onChange={handleChange} rows="5" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all resize-none" placeholder="Tell us about your requirements..."></textarea>
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-navy ml-1">Your Message</label>
+                <textarea name="message" value={formData.message} onChange={handleChange} rows="4" 
+                  className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-gold/10 focus:border-gold outline-none transition-all duration-300 font-medium resize-none placeholder-gray-400" 
+                  placeholder="How can we help you?"></textarea>
               </div>
 
-              <button type="submit" disabled={loading} className="w-full bg-navy text-white py-4 rounded-xl font-bold text-lg hover:bg-gold hover:text-navy transition-colors flex justify-center items-center shadow-lg">
-                {loading ? 'Sending Request...' : <><Send size={20} className="mr-2" /> Send Message</>}
+              <button type="submit" disabled={loading} 
+                className="w-full md:w-auto px-10 py-4 bg-navy text-white rounded-2xl font-bold text-lg hover:bg-gold hover:shadow-[0_10px_20px_rgba(201,168,76,0.3)] hover:-translate-y-1 transition-all duration-300 flex justify-center items-center group ml-auto mt-4">
+                {loading ? 'Sending...' : (
+                  <>
+                    Send Message
+                    <Send size={18} className="ml-3 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
               </button>
             </form>
           </motion.div>
@@ -204,37 +237,55 @@ export default function ContactPage() {
 
         {/* FAQ Section */}
         {cms.faqs && cms.faqs.length > 0 && (
-        <motion.div className="mt-32 max-w-4xl mx-auto" {...fadeInUp}>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-navy flex items-center justify-center tracking-tight">
-              <HelpCircle className="mr-4 text-gold" size={40} /> Frequently Asked Questions
-            </h2>
-          </div>
-          <div className="space-y-6">
-            {cms.faqs.map((faq, index) => (
-              <div key={index} className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300">
-                <button 
-                  className="w-full px-8 py-6 text-left flex justify-between items-center focus:outline-none group"
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                >
-                  <span className={`font-bold text-xl transition-colors duration-300 ${openFaq === index ? 'text-gold' : 'text-navy group-hover:text-gold'}`}>{faq.question}</span>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${openFaq === index ? 'bg-gold/10' : 'bg-gray-50 group-hover:bg-gold/10'}`}>
-                    {openFaq === index ? <ChevronUp className="text-gold" /> : <ChevronDown className="text-gray-400 group-hover:text-gold" />}
-                  </div>
-                </button>
-                {openFaq === index && (
-                  <div className="px-8 pb-8 pt-0">
-                    <p className="text-gray-600 text-lg leading-relaxed border-t border-gray-100 pt-6">{faq.answer}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </motion.div>
+          <motion.div className="mt-32 max-w-4xl mx-auto" {...fadeInUp}>
+            <div className="text-center mb-16">
+              <span className="text-gold font-bold tracking-widest uppercase text-sm mb-3 block">Got Questions?</span>
+              <h2 className="text-3xl md:text-5xl font-black text-navy tracking-tight">
+                Frequently Asked Questions
+              </h2>
+            </div>
+            
+            <div className="space-y-4">
+              {cms.faqs.map((faq, index) => (
+                <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
+                  <button 
+                    className="w-full px-8 py-6 text-left flex justify-between items-center focus:outline-none group"
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  >
+                    <span className={`font-bold text-lg transition-colors duration-300 ${openFaq === index ? 'text-gold' : 'text-navy group-hover:text-gold'}`}>
+                      {faq.question}
+                    </span>
+                    <div className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all duration-300 ${openFaq === index ? 'bg-gold text-white rotate-180' : 'bg-gray-50 text-gray-400 group-hover:bg-gold/10 group-hover:text-gold'}`}>
+                      <ChevronDown size={20} />
+                    </div>
+                  </button>
+                  <AnimatePresence>
+                    {openFaq === index && (
+                      <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-8 pb-8 pt-0">
+                          <div className="w-full h-px bg-gray-50 mb-6"></div>
+                          <p className="text-gray-600 text-base leading-relaxed font-medium">
+                            {faq.answer}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         )}
 
         {/* Map */}
-        <motion.div className="mt-32 rounded-[2.5rem] overflow-hidden shadow-2xl h-[600px] border-8 border-white bg-gray-100" {...fadeInUp}>
+        <motion.div className="mt-32 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgb(0,0,0,0.1)] h-[500px] border-[12px] border-white bg-gray-100 relative group" {...fadeInUp}>
+          <div className="absolute inset-0 border-2 border-gold/20 rounded-[2rem] pointer-events-none z-10"></div>
           <iframe 
             src={settings?.googleMapsLink || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120562.13887625126!2d73.0805566!3d19.2069818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be795856b3b2463%3A0xc66579c29ceb64dc!2sAmbernath%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"} 
             width="100%" 
@@ -243,6 +294,7 @@ export default function ContactPage() {
             allowFullScreen="" 
             loading="lazy" 
             referrerPolicy="no-referrer-when-downgrade"
+            className="filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
           ></iframe>
         </motion.div>
       </div>
